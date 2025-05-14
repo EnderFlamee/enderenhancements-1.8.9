@@ -23,4 +23,4 @@ plugins {
 }
 
 
-rootProject.name = "examplemod"
+rootProject.name = "enderenhancements-1.8.9"
