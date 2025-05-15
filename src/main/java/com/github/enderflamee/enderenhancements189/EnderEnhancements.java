@@ -30,6 +30,9 @@ public class EnderEnhancements {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
+        if (PlayerData.IsInGUI()) {
+            System.out.println(PlayerData.getCurrentGUIName());
+        }
         if (display != null) {
             mc.displayGuiScreen(display);
             display = null;
