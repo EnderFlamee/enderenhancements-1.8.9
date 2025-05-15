@@ -1,6 +1,7 @@
 package com.github.enderflamee.enderenhancements189;
 
 import com.github.enderflamee.enderenhancements189.commands.OpenConfig;
+import com.github.enderflamee.enderenhancements189.features.general.AutoExperimentationTable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -21,6 +22,7 @@ public class EnderEnhancements {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(this);
+        MinecraftForge.EVENT_BUS.register(new AutoExperimentationTable());
         ClientCommandHandler.instance.registerCommand(new OpenConfig());
         ConfigFile.initialize();
         System.out.println("D*-*irt: " + Blocks.dirt.getUnlocalizedName());
@@ -30,16 +32,9 @@ public class EnderEnhancements {
 
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
-        if (PlayerData.IsInGUI()) {
-            System.out.println(PlayerData.getCurrentGUIName());
-        }
         if (display != null) {
             mc.displayGuiScreen(display);
             display = null;
         }
     }
 }
-
-// add a config
-
-// add no block animation

@@ -2,7 +2,9 @@ package com.github.enderflamee.enderenhancements189;
 
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.ContainerChest;
+import net.minecraft.inventory.ContainerPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -25,30 +27,29 @@ public class PlayerData {
 
     public static boolean IsInGUI() {
         try {
-             EnderEnhancements.mc.thePlayer.openContainer.toString();
-        } catch (NullPointerException e) {
+            ((ContainerChest) EnderEnhancements.mc.thePlayer.openContainer).toString();
+        } catch (Exception e) {
             return false;
         }
         return true;
     }
 
     public static ContainerChest getCurrentGUI() {
-        if (EnderEnhancements.mc.thePlayer.openContainer instanceof ContainerChest) {
             return ((ContainerChest) EnderEnhancements.mc.thePlayer.openContainer);
-        }
-        throw new NullPointerException();
     }
 
     public static ItemStack checkInventorySlot(int slot) {
-     //   if ()
-        return null;
+        if (getCurrentGUI().inventorySlots.get(slot).getHasStack()) {
+            return getCurrentGUI().inventorySlots.get(slot).getStack();
+        }
+            return new ItemStack(Items.banner,0);
     }
 
     public static String getCurrentGUIName() {
-        if (EnderEnhancements.mc.thePlayer.openContainer instanceof ContainerChest) {
+        if (IsInGUI()) {
             return ((ContainerChest) EnderEnhancements.mc.thePlayer.openContainer).getLowerChestInventory().getDisplayName().getUnformattedText();
         }
-        throw new NullPointerException();
+        return "";
     }
 }
 
