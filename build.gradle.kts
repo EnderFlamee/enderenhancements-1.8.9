@@ -86,21 +86,13 @@ dependencies {
         isTransitive = false
     }
     shadowImpl("gg.essential:loader-launchwrapper:1.2.3")
-    implementation("gg.essential:essential-1.8.9-forge:17141+gd6f4cfd3a8") {
-        exclude(module = "asm")
-        exclude(module = "asm-commons")
-        exclude(module = "asm-tree")
-        exclude(module = "gson")
-        exclude(module = "vigilance")
-    }
+    implementation("gg.essential:essential-1.8.9-forge:17141+gd6f4cfd3a8")
     implementation("gg.essential:universalcraft-1.8.9-forge") {
         version {
             strictly("[401,)")
         }
     }
-    shadowImpl("gg.essential:vigilance:306") {
-        isTransitive = false
-    }
+    implementation("gg.essential:vigilance:306")
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
@@ -163,11 +155,11 @@ tasks.shadowJar {
     }
     // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
-    relocate("gg.essential.vigilance", "$baseGroup.deps.vigilance")
-    // vigilance dependencies
-    relocate("gg.essential.elementa", "$baseGroup.deps.elementa")
-    // elementa dependencies
-    relocate("gg.essential.universalcraft", "$baseGroup.deps.universalcraft")
+//    relocate("gg.essential.vigilance", "$baseGroup.deps.vigilance")
+//    // vigilance dependencies
+//    relocate("gg.essential.elementa", "$baseGroup.deps.elementa")
+//    // elementa dependencies
+//    relocate("gg.essential.universalcraft", "$baseGroup.deps.universalcraft")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)

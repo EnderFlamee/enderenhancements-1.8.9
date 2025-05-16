@@ -15,20 +15,31 @@ import java.util.Objects;
 
 public class AutoExperimentationTable {
 
-    public static List<String> ExperimentOrder = new ArrayList<>();
+    public static List<Integer> ExperimentOrder = new ArrayList<>();
+    public static boolean IsReadyForNextPattern = true;
+
 
     @SubscribeEvent
     public void OnTick(TickEvent.ClientTickEvent event) {
         if (EnderEnhancements.ConfigFile.AutoExperimentation) {
             if (PlayerData.IsInGUI() && PlayerData.getCurrentGUIName().contains("Chronomatron") && !PlayerData.getCurrentGUIName().contains("➜")) {
-                if (PlayerData.checkInventorySlot(49).getItem() == Item.getItemFromBlock(Blocks.glowstone)) {
+                if (PlayerData.getInventoryItemStack(49).getItem() == Item.getItemFromBlock(Blocks.glowstone)) {
                     for (int i = 0; i < PlayerData.getCurrentGUI().getLowerChestInventory().getSizeInventory(); i++) {
-                        ItemStack itemstack = PlayerData.checkInventorySlot(i);
-                        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.stained_glass)) {
-                            if (!ExperimentOrder.contains(itemstack.getDisplayName())) {
-                                ExperimentOrder.add(itemstack.getDisplayName());
+                        ItemStack itemstack = PlayerData.getInventoryItemStack(i);
+                        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.stained_hardened_clay)) {
+                            if (IsReadyForNextPattern) {
+                                ExperimentOrder.add(i);
                                 System.out.println(ExperimentOrder);
-//                            }
+                                IsReadyForNextPattern = false;
+                                return;
+                            }
+                        }
+                        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.stained_glass)) {
+                            if (!IsReadyForNextPattern) {
+                                if (!ExperimentOrder.isEmpty() && ExperimentOrder.get(ExperimentOrder.size() - 1) == i) {
+                                    IsReadyForNextPattern = true;
+                                    return;
+                                }
                             }
                         }
                     }
